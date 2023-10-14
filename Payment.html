@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles3.css">
+  <title>Payment methods</title>
+</head>
+<body>
+  <!-- Navigation bar -->
+  <div class="navbar">
+    <a href="Project.html">Home</a>
+    <a href="Payment.html">Payment</a>
+    <a href="Support.html">Support</a>
+  </div>
+
+  <div id="app">
+    <header>
+      <h1>Payment</h1>
+    </header>
+
+    <section>
+      <h2>Choose an iPhone</h2>
+      <select v-model="selectediPhone">
+        <option disabled value="">Select an iPhone</option>
+        <option v-for="iphone in iphones" :key="iphone.id" :value="iphone.id">{{ iphone.model }}</option>
+      </select>
+      <div class="iphone-details" v-if="selectediPhone !== ''">
+        <h2>iPhone Details</h2>
+        <h3>{{ iphones[selectediPhone - 1].model }}</h3>
+        <p>{{ iphones[selectediPhone - 1].description }}</p>
+        <p>Price: ${{ iphones[selectediPhone - 1].price }}</p>
+       
+      </div>
+      <p v-else>Select an iPhone to buy.</p>
+    </section>
+
+   
+    <h2>Enter Card Details:</h2>
+
+<form v-if="!showReview"> <!-- Hide the form when reviewing -->
+    <label for="cardName">Enter Full Name:</label>
+    <input class="input-field" type="text" id="cardName" v-model="formData.cardName" placeholder="Enter name on card" required>
+
+    <label for="address">Billing Address:</label>
+    <textarea class="input-field" id="text" v-model="formData.address" placeholder="Enter billing address" required></textarea>
+
+    <label for="cardNumber">Card Number:</label>
+    <input class="input-field" type="text" id="cardNumber" v-model="formData.cardNumber" placeholder="Enter card number" required>
+
+    <!-- CVV and Expiry Date section follows the name on the card -->
+    <div class="cvv-expiry-section">
+        <label for="cvv">CVV:</label>
+        <input class="input-field" type="text" id="cvv" v-model="formData.cvv" placeholder="Enter CVV" required>
+
+        <label for="expiryDate">Expiry Date:</label>
+        <input class="input-field" type="text" id="expiryDate" v-model="formData.expiryDate" placeholder="MM/YY" required>
+    </div>
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input class="input-field" type="tel" id="phoneNumber" v-model="formData.phoneNumber" placeholder="Enter phone number" required>
+
+    <!-- Add a button to review details -->
+    <button type="button" @click="showReview = true">Review Details</button>
+</form>
+
+
+    <!-- Review section -->
+    <div v-if="showReview">
+      <h2>Review Your Details:</h2>
+      <p><strong>Name on Card:</strong> {{ formData.cardName }}</p>
+      <p><strong>Card Number:</strong> {{ formData.cardNumber }}</p>
+      <p><strong>CVV:</strong> {{ formData.cvv }}</p>
+      <p><strong>Expiry Date:</strong> {{ formData.expiryDate }}</p>
+      <p><strong>Billing Address:</strong> {{ formData.address }}</p>
+      <p><strong>Phone Number:</strong> {{ formData.phoneNumber }}</p>
+
+      <!-- Add a button to confirm payment -->
+      <button type="button" @click="confirmPayment">Confirm Payment</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3.2.30/dist/vue.global.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          formData: {
+            cardName: '',
+            cardNumber: '',
+            cvv: '',
+            expiryDate: '',
+            address: '',
+            phoneNumber: '',
+          },
+          showReview: false, // Initially, don't show the review section
+          selectediPhone: '', // Added selectediPhone
+          iphones: [
+            {
+              id: 1,
+              model: 'iPhone 13 Pro Max',
+              description: 'The latest iPhone with Pro camera system.',
+              price: 1099,
+              image: 'download.jpeg',
+            },
+            {
+              id: 2,
+              model: 'iPhone 12 Mini',
+              description: 'Compact and powerful iPhone 12 Mini.',
+              price: 699,
+              image: 'download (1).jpeg',
+            },
+            {
+              id: 3,
+              model: 'iPhone SE (2nd Gen)',
+              description: 'A budget-friendly iPhone with A13 Bionic chip.',
+              price: 399,
+              image: 'iphone-se-storage-select-202207-midnight.jpeg',
+            },
+            {
+              id: 4,
+              model: 'iPhone 15 Pro Max',
+              description: 'Newest model with all of the latest design.',
+              price: 1600,
+              image: '639218-Product-0-I-638301468016886351.webp',
+            }
+          ],
+        };
+      },
+      methods: {
+        confirmPayment() {
+          alert('Payment confirmed!'); // Replace with actual logic
+        },
+        
+      },
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>

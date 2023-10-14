@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles2.css">
+  <title>Add item to cart</title>
+</head>
+<body>
+  <!-- Navigation bar -->
+  <div class="navbar">
+    <a href="Project.html">Home</a>
+    <a href="Payment.html">Payment</a>
+    <a href="Support.html">Support</a>
+    
+  </div>
+  
+  <div id="app">
+    <header>
+      <h1>Add To Cart</h1>
+    </header>
+
+    <section>
+      <h2>Choose an iPhone</h2>
+      <select v-model="selectediPhone">
+        <option disabled value="">Select an iPhone</option>
+        <option v-for="iphone in iphones" :key="iphone.id" :value="iphone.id">{{ iphone.model }}</option>
+      </select>
+      <div class="iphone-details" v-if="selectediPhone !== ''">
+        <h2>iPhone Details</h2>
+        <h3>{{ iphones[selectediPhone - 1].model }}</h3>
+        <p>{{ iphones[selectediPhone - 1].description }}</p>
+        <p>Price: ${{ iphones[selectediPhone - 1].price }}</p>
+       
+      </div>
+      <p v-else>Select an iPhone to ask about it details.</p>
+    </section>
+
+    <section>
+      <h2>Your details</h2>
+      <div class="contact-form">
+        <form @submit.prevent="submitForm">
+          <label for="name">Name:</label>
+          <input type="text" id="name" v-model="contactForm.name" required>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" v-model="contactForm.email" required>
+
+          <label for="phone ">PhoneNumber :</label>
+          <textarea id="phone " v-model="contactForm.phone " required></textarea>
+
+          <label for="enquire ">Your Enquire :</label>
+          <textarea id="enquire " v-model="contactForm.enquire " required></textarea>
+
+          <button type="submit" class="confirm-button">Submit</button>
+          <div v-if="showConfirmation">
+            <p>Please review your information:</p>
+            <p><strong>Name:</strong> {{ contactForm.name }}</p>
+            <p><strong>Email:</strong> {{ contactForm.email }}</p>
+            <p><strong>Phone :</strong> {{ contactForm.phone  }}</p>
+            <p><strong>Enquire :</strong> {{ contactForm.enquire }}</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+  
+  <script src="https://unpkg.com/vue@3.2.30/dist/vue.global.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          iphones: [
+            {
+              id: 1,
+              model: 'iPhone 13 Pro Max',
+              description: 'The latest iPhone with Pro camera system.',
+              price: 1099,
+              image: 'download.jpeg',
+            },
+            {
+              id: 2,
+              model: 'iPhone 12 Mini',
+              description: 'Compact and powerful iPhone 12 Mini.',
+              price: 699,
+              image: 'download (1).jpeg',
+            },
+            {
+              id: 3,
+              model: 'iPhone SE (2nd Gen)',
+              description: 'A budget-friendly iPhone with A13 Bionic chip.',
+              price: 399,
+              image: 'iphone-se-storage-select-202207-midnight.jpeg',
+            },
+            {
+              id: 4,
+              model: 'iPhone 15 Pro Max',
+              description: 'Newest model with all of the latest design.',
+              price: 1600,
+              image: '639218-Product-0-I-638301468016886351.webp',
+            }
+          ],
+          selectediPhone: '',
+          contactForm: {
+            name: '',
+            email: '',
+            phone: '',
+            enquire:''
+          },
+          showConfirmation: false
+        };
+      },
+      methods: {
+        addToCart(iphone) {
+          // Implement your cart functionality here or perform any desired action.
+          console.log('Added to Cart:', iphone.model);
+        },
+        submitForm() {
+  alert('Thank you for contacting us\nWe will get back to you shortly');
+  this.showConfirmation = true;
+}
+
+      }
+    });
+
+  
+    app.mount('#app');
+    
+  </script>
+</body>
+</html>
